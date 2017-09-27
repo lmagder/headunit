@@ -56,6 +56,18 @@ public:
         }
         SetRequiredSurfaces(idString.str(), fadeOpera ? 1 : 0);
     }
+
+    std::vector<SURFACES> ParseSurfaceString(const std::string& surfaceString)
+    {
+        std::istringstream idString(surfaceString);
+        std::vector<SURFACES> ret;
+        std::string item;
+        while(std::getline(idString, item, ','))
+        {
+            ret.push_back((SURFACES)atoi(item.c_str()));
+        }
+        return ret;
+    }
 };
 
 class AudioManagerClient : public com::xsembedded::ServiceProvider_proxy,
@@ -99,6 +111,8 @@ class VideoManagerClient : public com::jci::bucpsa_proxy,
 
     MazdaEventCallbacks& callbacks;
     NativeGUICtrlClient guiClient;
+    std::unique_ptr<DBus::Callback_Base<bool, const DBus::Message&>> dbusFilterFunc;
+    DBus::Connection& hmiBus;
     DBus::MessageSlot dbusFilter;
     const char* MATCH = "type='method_call',path='/com/jci/nativeguictrl',member='SetRequiredSurfaces'";
 public:
