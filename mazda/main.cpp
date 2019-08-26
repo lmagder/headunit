@@ -93,9 +93,9 @@ static void gps_thread_func(std::condition_variable& quitcv, std::mutex& quitmut
     //Not sure if this is actually required but the built-in Nav code on CMU does it
     mzd_gps2_set_enabled(true);
 
+    config::readConfig();
     while (true)
     {
-        config::readConfig();
         if (config::carGPS && mzd_gps2_get(newData) && !data.IsSame(newData))
         {
             data = newData;

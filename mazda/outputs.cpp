@@ -340,7 +340,7 @@ void VideoOutput::input_thread_func()
                         scanCode = HUIB_PLAYPAUSE;
                         break;
                     }
-
+                    
                     if (isPressed)
                     {
                         pressScanCode = scanCode;
@@ -486,7 +486,7 @@ VideoOutput::VideoOutput(MazdaEventCallbacks* callbacks)
     #else
     "axis-left=0 axis-top=0 disp-width=800 disp-height=480"
     #endif
-    " max-lateness=-1 sync=false async=false show-preroll-frame=false";
+    " max-lateness=1000000000 sync=false async=false";
 
     GError* error = nullptr;
     vid_pipeline = gst_parse_launch(vid_pipeline_launch, &error);
